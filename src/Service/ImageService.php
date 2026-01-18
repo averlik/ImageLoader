@@ -83,7 +83,16 @@ class ImageService
 
         $ratio = 200 / imagesy($image);
         $resized = imagescale($image, (int)(imagesx($image) * $ratio), 200);
-        $cropped = imagecrop($resized, ['x' => 0, 'y' => 0, 'width' => 200, 'height' => 200]);
+
+        $x = max(0, (imagesx($resized) - 200) / 2);
+        $y = max(0, (imagesy($resized) - 200) / 2);
+
+        $cropped = imagecrop($resized, [
+            'x' => (int)$x,
+            'y' => (int)$y,
+            'width' => 200,
+            'height' => 200
+        ]);
 
         if (!$cropped) {
             return null;

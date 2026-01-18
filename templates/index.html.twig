@@ -41,8 +41,13 @@
 
             const container = document.getElementById('images');
             images.forEach(img => {
-                container.innerHTML += `<img src="/${img.filename}" width="200" height="200">`;
+                const el = document.createElement('img');
+                el.src = '/' + img.filename;
+                el.width = 200;
+                el.height = 200;
+                container.appendChild(el);
             });
+
 
         } catch (err) {
             console.error(err);
