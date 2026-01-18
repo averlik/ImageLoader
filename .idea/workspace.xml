@@ -4,12 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5416e359-616f-4221-bdb5-ee18beab6656" name="Changes" comment="feat: validator package">
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+    <list default="true" id="5416e359-616f-4221-bdb5-ee18beab6656" name="Changes" comment="feat: added ImageRequestDto">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/services.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/services.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/ImageController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ImageController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Data/Request/ImageRequestDto.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Data/Request/ImageRequestDto.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -164,7 +164,7 @@
       <workItem from="1768636183233" duration="5444000" />
       <workItem from="1768651956667" duration="3552000" />
       <workItem from="1768657689339" duration="10182000" />
-      <workItem from="1768720406056" duration="4679000" />
+      <workItem from="1768720406056" duration="7236000" />
     </task>
     <task id="LOCAL-00001" summary="feat: init">
       <option name="closed" value="true" />
@@ -214,7 +214,15 @@
       <option name="project" value="LOCAL" />
       <updated>1768724168133</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="feat: added ImageRequestDto">
+      <option name="closed" value="true" />
+      <created>1768725308428</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1768725308428</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -269,6 +277,7 @@
     <MESSAGE value="feat: image controller" />
     <MESSAGE value="fix: index twig and image upload dir" />
     <MESSAGE value="feat: validator package" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: validator package" />
+    <MESSAGE value="feat: added ImageRequestDto" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: added ImageRequestDto" />
   </component>
 </project>
