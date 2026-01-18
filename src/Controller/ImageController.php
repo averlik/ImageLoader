@@ -2,19 +2,22 @@
 
 namespace App\Controller;
 
+use App\Data\Request\ImageRequestDto;
 use App\Document\Image;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ImageController extends AbstractController
 {
     public function __construct(
         private LoggerInterface $logger,
-    ) {
+    )
+    {
     }
 
     #[Route('/', name: 'home')]
@@ -27,17 +30,18 @@ class ImageController extends AbstractController
     }
 
     #[Route('/parse', name: 'parse_images', methods: ['POST'])]
-    public function parse(Request $request, DocumentManager $dm): JsonResponse
+    public function parse(
+        #[MapRequestPayload] ImageRequestDto $imageRequestDto,
+        DocumentManager                      $dm
+    ): JsonResponse
     {
-        $url = $request->request->get('url');
-        $minWidth = (int)$request->request->get('min_width');
-        $minHeight = (int)$request->request->get('min_height');
-        $text = $request->request->get('text');
 
-        if (!$url) {
-            return $this->json(['error' => 'Введите URL страницы'], 400);
-        }
+        $url = $imageRequestDto->url;
+        $minWidth = $imageRequestDto->minWidth;
+        $minHeight = $imageRequestDto->minHeight;
+        $text = $imageRequestDto->text;
 
+        $this->logger->error(404, [$url, $minWidth, $minHeight, $text]);
         $html = @file_get_contents($url);
         if (!$html) {
             return $this->json(['error' => 'Невозможно загрузить страницу'], 400);
@@ -46,12 +50,8 @@ class ImageController extends AbstractController
         $dom = new \DOMDocument();
         @$dom->loadHTML($html);
         $imagesTags = $dom->getElementsByTagName('img');
-        $this->logger->info('images_count', [
-            'count' => $imagesTags->length
-        ]);
 
         $result = [];
-
         foreach ($imagesTags as $imgTag) {
             $src = $imgTag->getAttribute('src');
             if (!$src) continue;
