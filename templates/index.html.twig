@@ -2,9 +2,9 @@
 
 <form id="parser-form">
     <input type="url" name="url" placeholder="URL страницы" required>
-    <input type="number" name="min_width" placeholder="Мин. ширина">
-    <input type="number" name="min_height" placeholder="Мин. высота">
-    <input type="text" name="text" placeholder="Текст на картинке">
+    <input type="number" name="min_width" placeholder="Мин. ширина" required>
+    <input type="number" name="min_height" placeholder="Мин. высота" required>
+    <input type="text" name="text" placeholder="Текст на картинке" required>
     <button type="submit">Загрузить</button>
 </form>
 
@@ -15,25 +15,38 @@
 </div>
 
 <script>
-    document.getElementById('parser-form').addEventListener('submit', async function(e){
+    document.getElementById('parser-form').addEventListener('submit', async function (e) {
         e.preventDefault();
-        const formData = new FormData(this);
 
-        const response = await fetch('{{ path('parse_images') }}', {
-            method: 'POST',
-            body: formData
-        });
+        const form = e.currentTarget;
+        const formData = new FormData(form);
 
-        const images = await response.json();
+        try {
+            const response = await fetch('{{ path('parse_images') }}', {
+                method: 'POST',
+                body: formData
+            });
 
-        if (images.error) {
-            alert(images.error);
-            return;
+            if (!response.ok) {
+                alert('Ошибка сервера');
+                return;
+            }
+
+            const images = await response.json();
+
+            if (images.error) {
+                alert(images.error);
+                return;
+            }
+
+            const container = document.getElementById('images');
+            images.forEach(img => {
+                container.innerHTML += `<img src="/${img.filename}" width="200" height="200">`;
+            });
+
+        } catch (err) {
+            console.error(err);
         }
-
-        const container = document.getElementById('images');
-        images.forEach(img => {
-            container.innerHTML += `<img src="/${img.filename}" width="200" height="200">`;
-        });
     });
 </script>
+

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Document\Image;
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -11,12 +12,15 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ImageController extends AbstractController
 {
+    public function __construct(
+        private LoggerInterface $logger,
+    ) {
+    }
+
     #[Route('/', name: 'home')]
     public function index(DocumentManager $dm)
     {
-//        $images = [];
         $images = $dm->getRepository(Image::class)->findAll();
-
         return $this->render('index.html.twig', [
             'images' => $images
         ]);
@@ -42,6 +46,9 @@ class ImageController extends AbstractController
         $dom = new \DOMDocument();
         @$dom->loadHTML($html);
         $imagesTags = $dom->getElementsByTagName('img');
+        $this->logger->info('images_count', [
+            'count' => $imagesTags->length
+        ]);
 
         $result = [];
 
@@ -102,13 +109,13 @@ class ImageController extends AbstractController
         $color = imagecolorallocate($cropped, 255, 255, 255);
         imagestring($cropped, 5, 5, 5, $text, $color);
 
-        if (!is_dir('public/uploads')) mkdir('public/uploads', 0777, true);
-        $filename = 'uploads/' . uniqid() . '.jpg';
-        imagejpeg($cropped, 'public/' . $filename);
+        $projectDir = $this->getParameter('kernel.project_dir');
+        $uploadsDir = $projectDir . '/public/uploads';
 
-        imagedestroy($image);
-        imagedestroy($resized);
-        imagedestroy($cropped);
+        if (!is_dir($uploadsDir)) mkdir($uploadsDir, 0777, true);
+
+        $filename = 'uploads/' . uniqid() . '.jpg';
+        imagejpeg($cropped, $projectDir . '/public/' . $filename);
 
         return $filename;
     }
