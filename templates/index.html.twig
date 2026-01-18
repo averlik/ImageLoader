@@ -1,13 +1,23 @@
-<h1>Загрузка картинок</h1>
+<div style="display: flex; justify-content: center; align-items: center; flex-direction: column">
+    <h1>Загрузка картинок</h1>
+    <form id="parser-form">
+        <input type="url" name="url" placeholder="URL страницы" required>
+        <input type="number" name="minWidth" placeholder="Мин. ширина" required>
+        <input type="number" name="minHeight" placeholder="Мин. высота" required>
+        <input type="text" name="text" placeholder="Текст на картинке" required>
+        <button type="submit">Загрузить</button>
+    </form>
 
-<form id="parser-form">
-    <input type="url" name="url" placeholder="URL страницы" required>
-    <input type="number" name="minWidth" placeholder="Мин. ширина" required>
-    <input type="number" name="minHeight" placeholder="Мин. высота" required>
-    <input type="text" name="text" placeholder="Текст на картинке" required>
-    <button type="submit">Загрузить</button>
-</form>
-
+    <div style="margin-bottom: 35px; text-align: left;">
+        <h3 style="margin-bottom: 5px;">Пример заполнения:</h3>
+        <ul style="margin: 0; padding-left: 20px;">
+            <li>https://smart-dogs.ru/blog/dressirovka-labradora/</li>
+            <li>200</li>
+            <li>200</li>
+            <li>COOL DOGS</li>
+        </ul>
+    </div>
+</div>
 <div id="images">
     {% for img in images %}
         <img src="{{ asset(img.filename) }}" width="200" height="200">
